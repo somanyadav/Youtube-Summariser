@@ -15,7 +15,7 @@ url = st.sidebar.text_input('Video URL', 'https://www.youtube.com/watch?v=T-JVpK
 # Display Video and Title
 video = pafy.new(url)
 value = video.title
-st.info("### Title : " + value)
+st.info(value)
 st.video(url)
 
 # If Summarize button is clicked

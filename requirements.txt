@@ -1,5 +1,5 @@
 youtube-dl
-git+https://github.com/Cupcakus/pafy
+pafy
 youtube_transcript_api
 textwrap3
 pybase64

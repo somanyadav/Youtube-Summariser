@@ -1,6 +1,4 @@
-streamlit
-youtube_transcript_api
-youtube_dl
+youtube-dl
 git+https://github.com/Cupcakus/pafy
 youtube_transcript_api
 textwrap3

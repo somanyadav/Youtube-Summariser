@@ -55,12 +55,12 @@ text-align: justify;
 st.sidebar.info(
         dedent(
             """
-        This web [app][#streamlit-app] is made by
+        This web [app][#streamlit-app] is made by\n
         [Soman Yadav][#linkedin2] and [Diksha Dutt][#linkedin1].
         
         [#linkedin1]: https://www.linkedin.com/in/dikshadutt08/
         [#linkedin2]: https://www.linkedin.com/in/somanyadav/
-        [#streamlit-app]: {Defaults.APP_URL}
+        [#streamlit-app]: https://github.com/somanyadav/Youtube-Summariser/
         
         """
         )

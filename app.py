@@ -52,3 +52,17 @@ text-align: justify;
 """
     st.markdown(html_str, unsafe_allow_html=True)
     
+st.sidebar.info(
+        dedent(
+            """
+        This web [app][#streamlit-app] is made by
+        [Soman Yadav][#linkedin2] and [Diksha Dutt][#linkedin1].
+        
+        [#linkedin1]: https://www.linkedin.com/in/dikshadutt08/
+        [#linkedin2]: https://www.linkedin.com/in/somanyadav/
+        [#streamlit-app]: {Defaults.APP_URL}
+        
+        """
+        )
+    )
+    

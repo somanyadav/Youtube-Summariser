@@ -62,7 +62,8 @@ text-align: justify;
 <p class="a">{transcript}</p>
 """
     st.markdown(html_str, unsafe_allow_html=True)
-    
+
+# Add Sidebar Info
 st.sidebar.info(
         dedent(
             """

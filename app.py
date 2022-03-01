@@ -56,7 +56,7 @@ st.sidebar.info(
         dedent(
             """
         This web [app][#streamlit-app] is made by\n
-        [Soman Yadav][#linkedin2] and [Diksha Dutt][#linkedin1].
+        [Diksha Dutt][#linkedin1] and [Soman Yadav][#linkedin2].
         
         [#linkedin1]: https://www.linkedin.com/in/dikshadutt08/
         [#linkedin2]: https://www.linkedin.com/in/somanyadav/

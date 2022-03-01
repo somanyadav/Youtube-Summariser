@@ -1,5 +1,6 @@
 # Running Streamlit
 import streamlit as st
+import base64
 
 # Extracting Transcript from YouTube
 import pafy

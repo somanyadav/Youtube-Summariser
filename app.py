@@ -9,6 +9,16 @@ from urllib.parse import urlparse
 from textwrap import dedent
 
 
+
+# Hide Streamlit Footer and buttons
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
 # Adding logo for the App
 file_ = open("app_logo.gif", "rb")
 contents = file_.read()

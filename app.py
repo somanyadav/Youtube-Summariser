@@ -8,6 +8,15 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from urllib.parse import urlparse
 from textwrap import dedent
 
+# Gensim Summarization
+from gensim.summarization.summarizer import summarize
+
+# Function for Gensim
+def gensim_summarize(text_content, percent):
+    
+    summary = summarize(text_content, ratio=(int(percent) / 100), split=False).replace("\n", " ")
+    return summary
+
 
 
 # Hide Streamlit Footer and buttons
@@ -39,6 +48,17 @@ value = video.title
 st.info("### " + value)
 st.video(url)
 
+# Specify the summarization algorithm
+sumalgo = st.sidebar.selectbox(
+     'Select a Summarisation Algorithm',
+     options=['Gensim', 'NLTK', 'Spacy'])
+
+# Specify the summary length
+length = st.sidebar.select_slider(
+     'Specify length of Summary',
+     options=['10', '20', '30', '40', '50'])
+
+
 # If Summarize button is clicked
 if st.sidebar.button('Summarize'):
     st.success(dedent("""### \U0001F4D6 Summary
@@ -60,7 +80,19 @@ if st.sidebar.button('Summarize'):
                     
             return script, len(script.split())
     transcript, no_of_words = generate_transcript(id)
-    
+
+
+    if sumalgo == 'Gensim':
+        summ = gensim_summarize(transcript, length)
+
+    #if sumalgo == 'NLTK':
+        # Call that function
+
+    #if sumalgo == 'Spacy':
+        # Call that function
+
+    else:
+        summ = "Please select a Summarisation Algorithm"
 
     # Priting Transcript in "JUSTIFY" alignment
     html_str = f"""
@@ -69,7 +101,7 @@ p.a {{
 text-align: justify;
 }}
 </style>
-<p class="a">{transcript}</p>
+<p class="a">{summ}</p>
 """
     st.markdown(html_str, unsafe_allow_html=True)
 
@@ -87,4 +119,3 @@ st.sidebar.info(
         """
         )
     )
-    

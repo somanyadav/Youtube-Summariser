@@ -66,8 +66,8 @@ sumalgo = st.sidebar.selectbox(
 
 # Specify the summary length
 length = st.sidebar.select_slider(
-     'Specify length of Summary',
-     options=['10%', '20%', '30%', '40%', '50%'])
+     'Specify length of Summary (in %)',
+     options=['10', '20', '30', '40', '50'])
 
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x

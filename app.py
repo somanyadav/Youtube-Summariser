@@ -1,5 +1,14 @@
+#-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
+# Importing Libraries
+
 # Running Streamlit
 import streamlit as st
+st.set_page_config( # Added favicon and title to the web app
+     page_title="Youtube Summariser",
+     page_icon='favicon.ico',
+     layout="wide",
+     initial_sidebar_state="expanded",
+ )
 import base64
 
 # Extracting Transcript from YouTube
@@ -8,16 +17,18 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from urllib.parse import urlparse
 from textwrap import dedent
 
+#-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
+# All Funtions
+
 # Gensim Summarization
 from gensim.summarization.summarizer import summarize
-
-# Function for Gensim
 def gensim_summarize(text_content, percent):
     
     summary = summarize(text_content, ratio=(int(percent) / 100), split=False).replace("\n", " ")
     return summary
 
 
+#-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 
 # Hide Streamlit Footer and buttons
 hide_streamlit_style = """
@@ -59,6 +70,7 @@ length = st.sidebar.select_slider(
      options=['10', '20', '30', '40', '50'])
 
 
+#-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 # If Summarize button is clicked
 if st.sidebar.button('Summarize'):
     st.success(dedent("""### \U0001F4D6 Summary
@@ -81,7 +93,7 @@ if st.sidebar.button('Summarize'):
             return script, len(script.split())
     transcript, no_of_words = generate_transcript(id)
 
-
+    # Transcript Summarization is done here
     if sumalgo == 'Gensim':
         summ = gensim_summarize(transcript, length)
 
@@ -92,9 +104,9 @@ if st.sidebar.button('Summarize'):
         # Call that function
 
     else:
-        summ = "\U0001F6A7 Work in Progress \U0001F6A7"
+        summ = "Please select a Summarisation Algorithm"
 
-    # Priting Transcript in "JUSTIFY" alignment
+    # Priting Summary (summ) in "JUSTIFY" alignment
     html_str = f"""
 <style>
 p.a {{
@@ -104,6 +116,10 @@ text-align: justify;
 <p class="a">{summ}</p>
 """
     st.markdown(html_str, unsafe_allow_html=True)
+
+
+#-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
+
 
 # Add Sidebar Info
 st.sidebar.info(

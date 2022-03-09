@@ -92,7 +92,7 @@ if st.sidebar.button('Summarize'):
         # Call that function
 
     else:
-        summ = "Please select a Summarisation Algorithm"
+        summ = "\U0001F6A7 Work in Progress \U0001F6A7"
 
     # Priting Transcript in "JUSTIFY" alignment
     html_str = f"""

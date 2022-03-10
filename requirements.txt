@@ -4,3 +4,4 @@ youtube_transcript_api
 textwrap3
 pybase64
 gensim==3.6.0
+nltk==3.7

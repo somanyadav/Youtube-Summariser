@@ -22,11 +22,53 @@ from textwrap import dedent
 
 # Gensim Summarization
 from gensim.summarization.summarizer import summarize
+
 def gensim_summarize(text_content, percent):
-    
     summary = summarize(text_content, ratio=(int(percent) / 100), split=False).replace("\n", " ")
     return summary
 
+# NLTK Summarization
+import nltk
+from string import punctuation
+from heapq import nlargest
+nltk.download('punkt')
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize, sent_tokenize
+
+def nltk_summarize(text_content, percent):
+    tokens = word_tokenize(text_content)
+    stop_words = stopwords.words('english')
+    punctuation_items = punctuation + '\n'
+
+    word_frequencies = {}
+    for word in tokens:
+        if word.lower() not in stop_words:
+            if word.lower() not in punctuation_items:
+                if word not in word_frequencies.keys():
+                    word_frequencies[word] = 1
+                else:
+                    word_frequencies[word] += 1
+    max_frequency = max(word_frequencies.values())
+
+    for word in word_frequencies.keys():
+        word_frequencies[word] = word_frequencies[word] / max_frequency
+    sentence_token = sent_tokenize(text_content)
+    sentence_scores = {}
+    for sent in sentence_token:
+        sentence = sent.split(" ")
+        for word in sentence:
+            if word.lower() in word_frequencies.keys():
+                if sent not in sentence_scores.keys():
+                    sentence_scores[sent] = word_frequencies[word.lower()]
+                else:
+                    sentence_scores[sent] += word_frequencies[word.lower()]
+
+    select_length = int(len(sentence_token) * (int(percent) / 100))
+    summary = nlargest(select_length, sentence_scores, key=sentence_scores.get)
+    final_summary = [word for word in summary]
+    summary = ' '.join(final_summary)
+    return summary
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 
@@ -66,8 +108,8 @@ sumalgo = st.sidebar.selectbox(
 
 # Specify the summary length
 length = st.sidebar.select_slider(
-     'Specify length of Summary (in %)',
-     options=['10', '20', '30', '40', '50'])
+     'Specify length of Summary',
+     options=['10%', '20%', '30%', '40%', '50%'])
 
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
@@ -95,19 +137,9 @@ if st.sidebar.button('Summarize'):
 
     # Transcript Summarization is done here
     if sumalgo == 'Gensim':
-        summ = gensim_summarize(transcript, length)
-
-    #if sumalgo == 'NLTK':
-        # Call that function
-
-    #if sumalgo == 'Spacy':
-        # Call that function
-
-    else:
-        summ = "\U0001F6A7 Work in Progress \U0001F6A7"
-
-    # Priting Summary (summ) in "JUSTIFY" alignment
-    html_str = f"""
+        summ = gensim_summarize(transcript, int(length[:2]))
+        # Priting Summary (summ) in "JUSTIFY" alignment
+        html_str = f"""
 <style>
 p.a {{
 text-align: justify;
@@ -115,7 +147,24 @@ text-align: justify;
 </style>
 <p class="a">{summ}</p>
 """
-    st.markdown(html_str, unsafe_allow_html=True)
+        st.markdown(html_str, unsafe_allow_html=True)
+
+    if sumalgo == 'NLTK':
+        summ1 = nltk_summarize(transcript, int(length[:2]))
+        # Priting Summary (summ) in "JUSTIFY" alignment
+        html_str1 = f"""
+<style>
+p.a {{
+text-align: justify;
+}}
+</style>
+<p class="a">{summ1}</p>
+"""
+        st.markdown(html_str1, unsafe_allow_html=True)
+
+    #if sumalgo == 'Spacy':
+        # Call that function
+    
 
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x

@@ -70,6 +70,46 @@ def nltk_summarize(text_content, percent):
     summary = ' '.join(final_summary)
     return summary
 
+# Spacy Summarization
+import spacy
+from spacy.lang.en.stop_words import STOP_WORDS
+import en_core_web_sm
+nlp = en_core_web_sm.load()
+def spacy_summarize(text_content, percent):
+    stop_words = list(STOP_WORDS)
+    punctuation_items = punctuation + '\n'
+    nlp = spacy.load('en_core_web_sm')
+
+    nlp_object = nlp(text_content)
+    word_frequencies = {}
+    for word in nlp_object:
+        if word.text.lower() not in stop_words:
+            if word.text.lower() not in punctuation_items:
+                if word.text not in word_frequencies.keys():
+                    word_frequencies[word.text] = 1
+                else:
+                    word_frequencies[word.text] += 1
+                    
+    max_frequency = max(word_frequencies.values())
+    for word in word_frequencies.keys():
+        word_frequencies[word] = word_frequencies[word] / max_frequency
+    sentence_token = [sentence for sentence in nlp_object.sents]
+    sentence_scores = {}
+    for sent in sentence_token:
+        sentence = sent.text.split(" ")
+        for word in sentence:
+            if word.lower() in word_frequencies.keys():
+                if sent not in sentence_scores.keys():
+                    sentence_scores[sent] = word_frequencies[word.lower()]
+                else:
+                    sentence_scores[sent] += word_frequencies[word.lower()]
+
+    select_length = int(len(sentence_token) * (int(percent) / 100))
+    summary = nlargest(select_length, sentence_scores, key=sentence_scores.get)
+    final_summary = [word.text for word in summary]
+    summary = ' '.join(final_summary)
+    return summary
+
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 
 # Hide Streamlit Footer and buttons
@@ -162,8 +202,19 @@ text-align: justify;
 """
         st.markdown(html_str1, unsafe_allow_html=True)
 
-    #if sumalgo == 'Spacy':
-        # Call that function
+    if sumalgo == 'Spacy':
+        summ2 = spacy_summarize(transcript, int(length[:2]))
+        # Priting Summary (summ) in "JUSTIFY" alignment
+        html_str2 = f"""
+<style>
+p.a {{
+text-align: justify;
+}}
+</style>
+<p class="a">{summ2}</p>
+"""
+        st.markdown(html_str2, unsafe_allow_html=True)
+
     
 
 

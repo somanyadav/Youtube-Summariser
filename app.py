@@ -12,10 +12,16 @@ st.set_page_config( # Added favicon and title to the web app
 import base64
 
 # Extracting Transcript from YouTube
-import pafy
+from bs4 import BeautifulSoup
+import requests
 from youtube_transcript_api import YouTubeTranscriptApi
 from urllib.parse import urlparse
 from textwrap import dedent
+import pafy
+
+#Translation and Audio stuff
+from deep_translator import GoogleTranslator
+from gtts import gTTS
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 # All Funtions
@@ -110,6 +116,15 @@ def spacy_summarize(text_content, percent):
     summary = ' '.join(final_summary)
     return summary
 
+
+#Get Key value from Dictionary
+def get_key_from_dict(val,dic):
+    key_list=list(dic.keys())
+    val_list=list(dic.values())
+    ind=val_list.index(val)
+    return key_list[ind]
+
+
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 
 # Hide Streamlit Footer and buttons
@@ -151,6 +166,12 @@ length = st.sidebar.select_slider(
      'Specify length of Summary',
      options=['10%', '20%', '30%', '40%', '50%'])
 
+# Select Language Preference
+languages_dict = {'en':'English' ,'af':'Afrikaans' ,'sq':'Albanian' ,'am':'Amharic' ,'ar':'Arabic' ,'hy':'Armenian' ,'az':'Azerbaijani' ,'eu':'Basque' ,'be':'Belarusian' ,'bn':'Bengali' ,'bs':'Bosnian' ,'bg':'Bulgarian' ,'ca':'Catalan' ,'ceb':'Cebuano' ,'ny':'Chichewa' ,'zh-cn':'Chinese (simplified)' ,'zh-tw':'Chinese (traditional)' ,'co':'Corsican' ,'hr':'Croatian' ,'cs':'Czech' ,'da':'Danish' ,'nl':'Dutch' ,'eo':'Esperanto' ,'et':'Estonian' ,'tl':'Filipino' ,'fi':'Finnish' ,'fr':'French' ,'fy':'Frisian' ,'gl':'Galician' ,'ka':'Georgian' ,'de':'German' ,'el':'Greek' ,'gu':'Gujarati' ,'ht':'Haitian creole' ,'ha':'Hausa' ,'haw':'Hawaiian' ,'iw':'Hebrew' ,'he':'Hebrew' ,'hi':'Hindi' ,'hmn':'Hmong' ,'hu':'Hungarian' ,'is':'Icelandic' ,'ig':'Igbo' ,'id':'Indonesian' ,'ga':'Irish' ,'it':'Italian' ,'ja':'Japanese' ,'jw':'Javanese' ,'kn':'Kannada' ,'kk':'Kazakh' ,'km':'Khmer' ,'ko':'Korean' ,'ku':'Kurdish (kurmanji)' ,'ky':'Kyrgyz' ,'lo':'Lao' ,'la':'Latin' ,'lv':'Latvian' ,'lt':'Lithuanian' ,'lb':'Luxembourgish' ,'mk':'Macedonian' ,'mg':'Malagasy' ,'ms':'Malay' ,'ml':'Malayalam' ,'mt':'Maltese' ,'mi':'Maori' ,'mr':'Marathi' ,'mn':'Mongolian' ,'my':'Myanmar (burmese)' ,'ne':'Nepali' ,'no':'Norwegian' ,'or':'Odia' ,'ps':'Pashto' ,'fa':'Persian' ,'pl':'Polish' ,'pt':'Portuguese' ,'pa':'Punjabi' ,'ro':'Romanian' ,'ru':'Russian' ,'sm':'Samoan' ,'gd':'Scots gaelic' ,'sr':'Serbian' ,'st':'Sesotho' ,'sn':'Shona' ,'sd':'Sindhi' ,'si':'Sinhala' ,'sk':'Slovak' ,'sl':'Slovenian' ,'so':'Somali' ,'es':'Spanish' ,'su':'Sundanese' ,'sw':'Swahili' ,'sv':'Swedish' ,'tg':'Tajik' ,'ta':'Tamil' ,'te':'Telugu' ,'th':'Thai' ,'tr':'Turkish' ,'uk':'Ukrainian' ,'ur':'Urdu' ,'ug':'Uyghur' ,'uz':'Uzbek' ,'vi':'Vietnamese' ,'cy':'Welsh' ,'xh':'Xhosa' ,'yi':'Yiddish' ,'yo':'Yoruba' ,'zu':'Zulu'}
+add_selectbox = st.sidebar.selectbox(
+    "Select Language",
+    ( 'English' ,'Afrikaans' ,'Albanian' ,'Amharic' ,'Arabic' ,'Armenian' ,'Azerbaijani' ,'Basque' ,'Belarusian' ,'Bengali' ,'Bosnian' ,'Bulgarian' ,'Catalan' ,'Cebuano' ,'Chichewa' ,'Chinese (simplified)' ,'Chinese (traditional)' ,'Corsican' ,'Croatian' ,'Czech' ,'Danish' ,'Dutch' ,'Esperanto' ,'Estonian' ,'Filipino' ,'Finnish' ,'French' ,'Frisian' ,'Galician' ,'Georgian' ,'German' ,'Greek' ,'Gujarati' ,'Haitian creole' ,'Hausa' ,'Hawaiian' ,'Hebrew' ,'Hebrew' ,'Hindi' ,'Hmong' ,'Hungarian' ,'Icelandic' ,'Igbo' ,'Indonesian' ,'Irish' ,'Italian' ,'Japanese' ,'Javanese' ,'Kannada' ,'Kazakh' ,'Khmer' ,'Korean' ,'Kurdish (kurmanji)' ,'Kyrgyz' ,'Lao' ,'Latin' ,'Latvian' ,'Lithuanian' ,'Luxembourgish' ,'Macedonian' ,'Malagasy' ,'Malay' ,'Malayalam' ,'Maltese' ,'Maori' ,'Marathi' ,'Mongolian' ,'Myanmar (burmese)' ,'Nepali' ,'Norwegian' ,'Odia' ,'Pashto' ,'Persian' ,'Polish' ,'Portuguese' ,'Punjabi' ,'Romanian' ,'Russian' ,'Samoan' ,'Scots gaelic' ,'Serbian' ,'Sesotho' ,'Shona' ,'Sindhi' ,'Sinhala' ,'Slovak' ,'Slovenian' ,'Somali' ,'Spanish' ,'Sundanese' ,'Swahili' ,'Swedish' ,'Tajik' ,'Tamil' ,'Telugu' ,'Thai' ,'Turkish' ,'Ukrainian' ,'Urdu' ,'Uyghur' ,'Uzbek' ,'Vietnamese' ,'Welsh' ,'Xhosa' ,'Yiddish' ,'Yoruba' ,'Zulu')
+)
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 # If Summarize button is clicked
@@ -178,44 +199,36 @@ if st.sidebar.button('Summarize'):
     # Transcript Summarization is done here
     if sumalgo == 'Gensim':
         summ = gensim_summarize(transcript, int(length[:2]))
-        # Priting Summary (summ) in "JUSTIFY" alignment
-        html_str = f"""
-<style>
-p.a {{
-text-align: justify;
-}}
-</style>
-<p class="a">{summ}</p>
-"""
+       
         st.markdown(html_str, unsafe_allow_html=True)
 
     if sumalgo == 'NLTK':
-        summ1 = nltk_summarize(transcript, int(length[:2]))
-        # Priting Summary (summ) in "JUSTIFY" alignment
-        html_str1 = f"""
-<style>
-p.a {{
-text-align: justify;
-}}
-</style>
-<p class="a">{summ1}</p>
-"""
-        st.markdown(html_str1, unsafe_allow_html=True)
+        summ = nltk_summarize(transcript, int(length[:2]))
+        
 
     if sumalgo == 'Spacy':
-        summ2 = spacy_summarize(transcript, int(length[:2]))
-        # Priting Summary (summ) in "JUSTIFY" alignment
-        html_str2 = f"""
+        summ = spacy_summarize(transcript, int(length[:2]))
+        
+
+
+    # Translate and print Summary
+    translated = GoogleTranslator(source='auto', target= get_key_from_dict(add_selectbox,languages_dict)).translate(summ)
+    html_str3 = f"""
 <style>
 p.a {{
 text-align: justify;
 }}
 </style>
-<p class="a">{summ2}</p>
+<p class="a">{translated}</p>
 """
-        st.markdown(html_str2, unsafe_allow_html=True)
+    st.markdown(html_str3, unsafe_allow_html=True)
 
-    
+    st.success("###  \U0001F3A7 Hear your Summary")
+    speech = gTTS(text = translated,lang=get_key_from_dict(add_selectbox,languages_dict), slow = False)
+    speech.save('user_trans.mp3')          
+    audio_file = open('user_trans.mp3', 'rb')    
+    audio_bytes = audio_file.read()    
+    st.audio(audio_bytes, format='audio/ogg',start_time=0)
 
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x

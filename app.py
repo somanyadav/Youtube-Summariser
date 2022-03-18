@@ -200,7 +200,6 @@ if st.sidebar.button('Summarize'):
     if sumalgo == 'Gensim':
         summ = gensim_summarize(transcript, int(length[:2]))
        
-        st.markdown(html_str, unsafe_allow_html=True)
 
     if sumalgo == 'NLTK':
         summ = nltk_summarize(transcript, int(length[:2]))

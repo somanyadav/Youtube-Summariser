@@ -17,7 +17,7 @@ import requests
 from youtube_transcript_api import YouTubeTranscriptApi
 from urllib.parse import urlparse
 from textwrap import dedent
-import pafy
+#import pafy
 
 #Translation and Audio stuff
 from deep_translator import GoogleTranslator

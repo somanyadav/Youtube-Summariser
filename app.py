@@ -17,7 +17,7 @@ import requests
 from youtube_transcript_api import YouTubeTranscriptApi
 from urllib.parse import urlparse
 from textwrap import dedent
-#import pafy
+from pytube import YouTube
 
 #Translation and Audio stuff
 from deep_translator import GoogleTranslator
@@ -151,9 +151,9 @@ st.sidebar.markdown(
 url = st.sidebar.text_input('Video URL', 'https://www.youtube.com/watch?v=T-JVpKku5SI')
 
 # Display Video and Title
-#video = pafy.new(url)
-#value = video.title
-#st.info("### " + value)
+yt = YouTube(url)
+value = yt.streams[0].title
+st.info("### " + value)
 st.video(url)
 
 # Specify the summarization algorithm

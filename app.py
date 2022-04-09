@@ -151,9 +151,9 @@ st.sidebar.markdown(
 url = st.sidebar.text_input('Video URL', 'https://www.youtube.com/watch?v=T-JVpKku5SI')
 
 # Display Video and Title
-video = pafy.new(url)
-value = video.title
-st.info("### " + value)
+#video = pafy.new(url)
+#value = video.title
+#st.info("### " + value)
 st.video(url)
 
 # Specify the summarization algorithm

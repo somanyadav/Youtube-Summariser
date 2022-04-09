@@ -1,4 +1,4 @@
-youtube_dl
+youtube-dl==2020.12.2
 git+https://github.com/mps-youtube/pafy
 youtube_transcript_api
 textwrap3

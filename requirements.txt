@@ -1,5 +1,4 @@
-youtube-dl==2021.12.17
-git+https://github.com/Cupcakus/pafy
+pytube==12.0.0
 youtube_transcript_api
 textwrap3
 pybase64

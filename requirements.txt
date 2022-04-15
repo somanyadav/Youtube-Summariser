@@ -1,5 +1,5 @@
 spacy>=3.0.0,<4.0.0
-pytube==12.0.0
+pytube==11.0.1
 youtube_transcript_api
 textwrap3
 pybase64

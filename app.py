@@ -158,7 +158,7 @@ st.video(url)
 
 #Specify Summarization type
 st.sidebar.write("Specify Summarization Type")
-col1, col2 = st.columns([.5,1])
+col1, col2 = st.columns(1)
 
 with col1:
     st.sidebar.button("Abstractive")

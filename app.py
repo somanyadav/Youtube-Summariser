@@ -247,7 +247,7 @@ if sumtype == 'Abstractive':
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 
 elif sumtype == 'Extractive':
-     return 0
+     st.write("Kar raha Hoon")
 
 
 

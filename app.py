@@ -157,13 +157,12 @@ url = st.sidebar.text_input('Video URL', 'https://www.youtube.com/watch?v=T-JVpK
 st.video(url)
 
 #Specify Summarization type
+st.write("Specify Summarization Type")
 col1, col2 = st.columns(2)
-
 with col1:
-    st.button("Abstractive")
-
+    st.sidebar.button("Abstractive")
 with col2:
-    st.button("Extractive")
+    st.sidebar.button("Extractive")
 
 # Specify the summarization algorithm
 sumalgo = st.sidebar.selectbox(

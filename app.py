@@ -162,7 +162,7 @@ sumtype = st.sidebar.selectbox(
      options=['Abstractive', 'Extractive'])
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
-if sumtype == 'Abstractive':
+if sumtype == 'Extractive':
      
      # Specify the summarization algorithm
      sumalgo = st.sidebar.selectbox(
@@ -246,7 +246,7 @@ if sumtype == 'Abstractive':
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 
-elif sumtype == 'Extractive':
+elif sumtype == 'Abstractive':
      st.write("Kar raha Hoon")
 
 

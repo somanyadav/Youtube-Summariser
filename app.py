@@ -157,7 +157,7 @@ url = st.sidebar.text_input('Video URL', 'https://www.youtube.com/watch?v=T-JVpK
 st.video(url)
 
 #Specify Summarization type
-sumalgo = st.sidebar.selectbox(
+sumtype = st.sidebar.selectbox(
      'Specify Summarization Type',
      options=['Abstractive', 'Extractive'])
 
@@ -177,6 +177,80 @@ add_selectbox = st.sidebar.selectbox(
     "Select Language",
     ( 'English' ,'Afrikaans' ,'Albanian' ,'Amharic' ,'Arabic' ,'Armenian' ,'Azerbaijani' ,'Basque' ,'Belarusian' ,'Bengali' ,'Bosnian' ,'Bulgarian' ,'Catalan' ,'Cebuano' ,'Chichewa' ,'Chinese (simplified)' ,'Chinese (traditional)' ,'Corsican' ,'Croatian' ,'Czech' ,'Danish' ,'Dutch' ,'Esperanto' ,'Estonian' ,'Filipino' ,'Finnish' ,'French' ,'Frisian' ,'Galician' ,'Georgian' ,'German' ,'Greek' ,'Gujarati' ,'Haitian creole' ,'Hausa' ,'Hawaiian' ,'Hebrew' ,'Hindi' ,'Hmong' ,'Hungarian' ,'Icelandic' ,'Igbo' ,'Indonesian' ,'Irish' ,'Italian' ,'Japanese' ,'Javanese' ,'Kannada' ,'Kazakh' ,'Khmer' ,'Korean' ,'Kurdish (kurmanji)' ,'Kyrgyz' ,'Lao' ,'Latin' ,'Latvian' ,'Lithuanian' ,'Luxembourgish' ,'Macedonian' ,'Malagasy' ,'Malay' ,'Malayalam' ,'Maltese' ,'Maori' ,'Marathi' ,'Mongolian' ,'Myanmar (burmese)' ,'Nepali' ,'Norwegian' ,'Odia' ,'Pashto' ,'Persian' ,'Polish' ,'Portuguese' ,'Punjabi' ,'Romanian' ,'Russian' ,'Samoan' ,'Scots gaelic' ,'Serbian' ,'Sesotho' ,'Shona' ,'Sindhi' ,'Sinhala' ,'Slovak' ,'Slovenian' ,'Somali' ,'Spanish' ,'Sundanese' ,'Swahili' ,'Swedish' ,'Tajik' ,'Tamil' ,'Telugu' ,'Thai' ,'Turkish' ,'Ukrainian' ,'Urdu' ,'Uyghur' ,'Uzbek' ,'Vietnamese' ,'Welsh' ,'Xhosa' ,'Yiddish' ,'Yoruba' ,'Zulu')
 )
+
+#-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
+if sumtype == 'Abstractive':
+ 
+     # If Summarize button is clicked
+     if st.sidebar.button('Summarize'):
+         st.success(dedent("""### \U0001F4D6 Summary
+     > Success!
+         """))
+
+         # Generate Transcript by slicing YouTube link to id 
+         url_data = urlparse(url)
+         id = url_data.query[2::]
+
+         def generate_transcript(id):
+                 transcript = YouTubeTranscriptApi.get_transcript(id)
+                 script = ""
+
+                 for text in transcript:
+                         t = text["text"]
+                         if t != '[Music]':
+                                 script += t + " "
+
+                 return script, len(script.split())
+         transcript, no_of_words = generate_transcript(id)
+
+         # Transcript Summarization is done here
+         if sumalgo == 'Gensim':
+             summ = gensim_summarize(transcript, int(length[:2]))
+
+
+         if sumalgo == 'NLTK':
+             summ = nltk_summarize(transcript, int(length[:2]))
+
+
+         if sumalgo == 'Spacy':
+             summ = spacy_summarize(transcript, int(length[:2]))
+
+
+
+         # Translate and Print Summary
+         translated = GoogleTranslator(source='auto', target= get_key_from_dict(add_selectbox,languages_dict)).translate(summ)
+         html_str3 = f"""
+     <style>
+     p.a {{
+     text-align: justify;
+     }}
+     </style>
+     <p class="a">{translated}</p>
+     """
+         st.markdown(html_str3, unsafe_allow_html=True)
+
+         # Generate Audio
+         st.success("###  \U0001F3A7 Hear your Summary")
+         no_support = ['Amharic', 'Azerbaijani', 'Basque', 'Belarusian', 'Cebuano', 'Chichewa', 'Chinese (simplified)', 'Chinese (traditional)', 'Corsican', 'Frisian', 'Galician', 'Georgian', 'Haitian creole', 'Hausa', 'Hawaiian', 'Hmong', 'Igbo', 'Irish', 'Kazakh', 'Kurdish (kurmanji)', 'Kyrgyz', 'Lao', 'Lithuanian', 'Luxembourgish', 'Malagasy', 'Maltese', 'Maori', 'Mongolian', 'Odia', 'Pashto', 'Persian', 'Punjabi', 'Samoan', 'Scots gaelic', 'Sesotho', 'Shona', 'Sindhi', 'Slovenian', 'Somali', 'Tajik', 'Uyghur', 'Uzbek', 'Xhosa', 'Yiddish', 'Yoruba', 'Zulu']
+         if add_selectbox in no_support:
+             st.warning(" \U000026A0 \xa0 Audio Support for this language is currently unavailable\n")
+             lang_warn = GoogleTranslator(source='auto', target= get_key_from_dict(add_selectbox,languages_dict)).translate("\U000026A0 \xa0 Audio Support for this language is currently unavailable")
+             st.warning(lang_warn)
+         else:
+             speech = gTTS(text = translated,lang=get_key_from_dict(add_selectbox,languages_dict), slow = False)
+             speech.save('user_trans.mp3')          
+             audio_file = open('user_trans.mp3', 'rb')    
+             audio_bytes = audio_file.read()    
+             st.audio(audio_bytes, format='audio/ogg',start_time=0)
+
+
+#-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
+
+elif sumtype == 'Extractive':
+     return 0
+
+
+
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 # If Summarize button is clicked

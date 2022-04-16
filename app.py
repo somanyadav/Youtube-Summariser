@@ -247,7 +247,27 @@ text-align: justify;
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 
 elif sumtype == 'Abstractive':
-     st.write("Kar raha Hoon")
+     st.success(dedent("""### \U0001F4D6 Summary
+> Success!
+    """))
+
+     # Generate Transcript by slicing YouTube link to id 
+     url_data = urlparse(url)
+     id = url_data.query[2::]
+
+     def generate_transcript(id):
+          transcript = YouTubeTranscriptApi.get_transcript(id)
+          script = ""
+
+          for text in transcript:
+               t = text["text"]
+               if t != '[Music]':
+                    script += t + " "
+
+          return script, len(script.split())
+     transcript, no_of_words = generate_transcript(id)
+     
+     st.write(transcript)
 
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x

@@ -25,7 +25,7 @@ from gtts import gTTS
 
 #Abstractive Summary
 import transformers
-from transformers import pipeline
+from transformers import T5ForConditionalGeneration, T5Tokenizer
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 # All Funtions
@@ -272,9 +272,19 @@ elif sumtype == 'Abstractive':
                return script, len(script.split())
           transcript, no_of_words = generate_transcript(id)
 
-          summarizer = pipeline('summarization', model='facebook/bart-large-cnn', tokenizer='facebook/bart-large-cnn')
-          st.write(summarizer(transcript, min_length = round(0.1 * len(transcript.split(' '))), max_length = round(0.2 * len(transcript.split(' '))), do_sample=False))
-
+          model = T5ForConditionalGeneration.from_pretrained("t5-base")
+          tokenizer = T5Tokenizer.from_pretrained("t5-base")
+          inputs = tokenizer.encode("summarize: " + article, return_tensors="pt", max_length=512, truncation=True)
+          
+          outputs = model.generate(
+         inputs, 
+         max_length=150, 
+         min_length=40, 
+         length_penalty=2.0, 
+         num_beams=4, 
+         early_stopping=True)
+          
+     st.write(tokenizer.decode(outputs[0]))
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 

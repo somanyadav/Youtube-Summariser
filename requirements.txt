@@ -1,5 +1,6 @@
 transformers==4.18.0
 torch==1.11.0
+sentencepiece==0.1.96
 spacy>=3.0.0,<4.0.0
 pytube==12.0.0
 youtube_transcript_api

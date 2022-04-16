@@ -274,17 +274,17 @@ elif sumtype == 'Abstractive':
 
           model = T5ForConditionalGeneration.from_pretrained("t5-base")
           tokenizer = T5Tokenizer.from_pretrained("t5-base")
-          inputs = tokenizer.encode("summarize: " + article, return_tensors="pt", max_length=512, truncation=True)
+          inputs = tokenizer.encode("summarize: " + transcript, return_tensors="pt", max_length=512, truncation=True)
           
           outputs = model.generate(
-         inputs, 
-         max_length=150, 
-         min_length=40, 
-         length_penalty=2.0, 
-         num_beams=4, 
-         early_stopping=True)
+              inputs, 
+              max_length=150, 
+              min_length=40, 
+              length_penalty=2.0, 
+              num_beams=4, 
+              early_stopping=True)
           
-     st.write(tokenizer.decode(outputs[0]))
+          st.write(tokenizer.decode(outputs[0]))
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 

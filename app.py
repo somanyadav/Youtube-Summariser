@@ -220,13 +220,13 @@ if sumtype == 'Extractive':
          # Translate and Print Summary
          translated = GoogleTranslator(source='auto', target= get_key_from_dict(add_selectbox,languages_dict)).translate(summ)
          html_str3 = f"""
-     <style>
-     p.a {{
-     text-align: justify;
-     }}
-     </style>
-     <p class="a">{translated}</p>
-     """
+<style>
+p.a {{
+text-align: justify;
+}}
+</style>
+<p class="a">{translated}</p>
+"""
          st.markdown(html_str3, unsafe_allow_html=True)
 
          # Generate Audio

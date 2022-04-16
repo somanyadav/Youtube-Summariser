@@ -23,6 +23,10 @@ from textwrap import dedent
 from deep_translator import GoogleTranslator
 from gtts import gTTS
 
+#Abstractive Summary
+import transformers
+from transformers import pipeline
+
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 # All Funtions
 
@@ -268,7 +272,8 @@ elif sumtype == 'Abstractive':
                return script, len(script.split())
           transcript, no_of_words = generate_transcript(id)
 
-          st.write(transcript)
+          summarizer = pipeline('summarization', model='facebook/bart-large-cnn', tokenizer='facebook/bart-large-cnn')
+          st.write(summarizer(transcript, min_length = round(0.1 * len(transcript.split(' '))), max_length = round(0.2 * len(transcript.split(' '))), do_sample=False))
 
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x

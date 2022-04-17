@@ -295,6 +295,7 @@ elif sumtype == 'Abstractive':
           
           summ = tokenizer.decode(outputs[0])
           
+          
           # Translate and Print Summary
           translated = GoogleTranslator(source='auto', target= get_key_from_dict(add_selectbox,languages_dict)).translate(summ)
           html_str3 = f"""

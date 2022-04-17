@@ -296,8 +296,8 @@ elif sumtype == 'Abstractive':
           summ = tokenizer.decode(outputs[0])
           
           # Translate and Print Summary
-         translated = GoogleTranslator(source='auto', target= get_key_from_dict(add_selectbox,languages_dict)).translate(summ)
-         html_str3 = f"""
+          translated = GoogleTranslator(source='auto', target= get_key_from_dict(add_selectbox,languages_dict)).translate(summ)
+          html_str3 = f"""
 <style>
 p.a {{
 text-align: justify;
@@ -305,21 +305,21 @@ text-align: justify;
 </style>
 <p class="a">{translated}</p>
 """
-         st.markdown(html_str3, unsafe_allow_html=True)
+          st.markdown(html_str3, unsafe_allow_html=True)
 
-         # Generate Audio
-         st.success("###  \U0001F3A7 Hear your Summary")
-         no_support = ['Amharic', 'Azerbaijani', 'Basque', 'Belarusian', 'Cebuano', 'Chichewa', 'Chinese (simplified)', 'Chinese (traditional)', 'Corsican', 'Frisian', 'Galician', 'Georgian', 'Haitian creole', 'Hausa', 'Hawaiian', 'Hmong', 'Igbo', 'Irish', 'Kazakh', 'Kurdish (kurmanji)', 'Kyrgyz', 'Lao', 'Lithuanian', 'Luxembourgish', 'Malagasy', 'Maltese', 'Maori', 'Mongolian', 'Odia', 'Pashto', 'Persian', 'Punjabi', 'Samoan', 'Scots gaelic', 'Sesotho', 'Shona', 'Sindhi', 'Slovenian', 'Somali', 'Tajik', 'Uyghur', 'Uzbek', 'Xhosa', 'Yiddish', 'Yoruba', 'Zulu']
-         if add_selectbox in no_support:
-             st.warning(" \U000026A0 \xa0 Audio Support for this language is currently unavailable\n")
-             lang_warn = GoogleTranslator(source='auto', target= get_key_from_dict(add_selectbox,languages_dict)).translate("\U000026A0 \xa0 Audio Support for this language is currently unavailable")
-             st.warning(lang_warn)
-         else:
-             speech = gTTS(text = translated,lang=get_key_from_dict(add_selectbox,languages_dict), slow = False)
-             speech.save('user_trans.mp3')          
-             audio_file = open('user_trans.mp3', 'rb')    
-             audio_bytes = audio_file.read()    
-             st.audio(audio_bytes, format='audio/ogg',start_time=0)
+          # Generate Audio
+          st.success("###  \U0001F3A7 Hear your Summary")
+          no_support = ['Amharic', 'Azerbaijani', 'Basque', 'Belarusian', 'Cebuano', 'Chichewa', 'Chinese (simplified)', 'Chinese (traditional)', 'Corsican', 'Frisian', 'Galician', 'Georgian', 'Haitian creole', 'Hausa', 'Hawaiian', 'Hmong', 'Igbo', 'Irish', 'Kazakh', 'Kurdish (kurmanji)', 'Kyrgyz', 'Lao', 'Lithuanian', 'Luxembourgish', 'Malagasy', 'Maltese', 'Maori', 'Mongolian', 'Odia', 'Pashto', 'Persian', 'Punjabi', 'Samoan', 'Scots gaelic', 'Sesotho', 'Shona', 'Sindhi', 'Slovenian', 'Somali', 'Tajik', 'Uyghur', 'Uzbek', 'Xhosa', 'Yiddish', 'Yoruba', 'Zulu']
+          if add_selectbox in no_support:
+              st.warning(" \U000026A0 \xa0 Audio Support for this language is currently unavailable\n")
+              lang_warn = GoogleTranslator(source='auto', target= get_key_from_dict(add_selectbox,languages_dict)).translate("\U000026A0 \xa0 Audio Support for this language is currently unavailable")
+              st.warning(lang_warn)
+          else:
+              speech = gTTS(text = translated,lang=get_key_from_dict(add_selectbox,languages_dict), slow = False)
+              speech.save('user_trans.mp3')          
+              audio_file = open('user_trans.mp3', 'rb')    
+              audio_bytes = audio_file.read()    
+              st.audio(audio_bytes, format='audio/ogg',start_time=0)
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 

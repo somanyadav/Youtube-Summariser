@@ -141,7 +141,7 @@ hide_streamlit_style = """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
 # Adding logo for the App
-file_ = open("Youtube-Summariser/blob/main/app_logo.gif", "rb")
+file_ = open("app_logo.gif", "rb")
 contents = file_.read()
 data_url = base64.b64encode(contents).decode("utf-8")
 file_.close()

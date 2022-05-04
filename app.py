@@ -345,6 +345,30 @@ if sumtype == 'Extractive':
 
          if sumalgo == 'Spacy':
              summ = spacy_summarize(transcript, int(length[:2]))
+
+         if sumalgo == 'TF-IDF':
+             sentences = sent_tokenize(text) # NLTK function
+             total_documents = len(sentences)
+             sentences = sent_tokenize(text)
+             total_documents = len(sentences)
+
+             freq_matrix = _create_frequency_matrix(sentences)
+
+             tf_matrix = _create_tf_matrix(freq_matrix)
+
+             count_doc_per_words = _create_documents_per_words(freq_matrix)
+
+             idf_matrix = _create_idf_matrix(freq_matrix, count_doc_per_words, total_documents)
+
+             tf_idf_matrix = _create_tf_idf_matrix(tf_matrix, idf_matrix)
+
+             sentence_scores = _score_sentences(tf_idf_matrix)
+
+             threshold = _find_average_score(sentence_scores)
+
+             summary = _generate_summary(sentences, sentence_scores, 0.7 * threshold)
+            
+             summ = summary
               
                
 

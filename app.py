@@ -366,7 +366,7 @@ if sumtype == 'Extractive':
 
              threshold = _find_average_score(sentence_scores)
 
-             summary = _generate_summary(sentences, sentence_scores, 0.7 * threshold)
+             summary = _generate_summary(sentences, sentence_scores, 1.3 * threshold)
             
              summ = summary
               

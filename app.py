@@ -349,7 +349,7 @@ if sumtype == 'Extractive':
          if sumalgo == 'TF-IDF':
              sentences = sent_tokenize(transcript) # NLTK function
              total_documents = len(sentences)
-             sentences = sent_tokenize(text)
+             sentences = sent_tokenize(transcript)
              total_documents = len(sentences)
 
              freq_matrix = _create_frequency_matrix(sentences)

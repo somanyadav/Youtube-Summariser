@@ -347,7 +347,7 @@ if sumtype == 'Extractive':
              summ = spacy_summarize(transcript, int(length[:2]))
 
          if sumalgo == 'TF-IDF':
-             sentences = sent_tokenize(text) # NLTK function
+             sentences = sent_tokenize(transcript) # NLTK function
              total_documents = len(sentences)
              sentences = sent_tokenize(text)
              total_documents = len(sentences)

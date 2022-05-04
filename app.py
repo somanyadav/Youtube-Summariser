@@ -345,6 +345,7 @@ if sumtype == 'Extractive':
 
          if sumalgo == 'Spacy':
              summ = spacy_summarize(transcript, int(length[:2]))
+              
                
 
           

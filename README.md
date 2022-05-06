@@ -13,3 +13,14 @@
 ## How it Works
 
 ![Youtube Summarizer](https://github.com/somanyadav/Youtube-Summariser/blob/main/structure.JPG)
+
+
+## App Features
+
+<ol>Get summary by using different summarization algorithms.</ol>
+
+<ol>Change the length of the summary as the user wants.</ol>
+
+<ol>Generate summary of a video in any language.</ol>
+
+<ol>Provide summary in the form of text and audio</ol>

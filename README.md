@@ -24,3 +24,10 @@
 <ol>Generate summary of a video in any language.</ol>
 
 <ol>Provide summary in the form of text and audio</ol>
+
+## Installation
+
+1. ```
+git clone https://github.com/somanyadav/Youtube-Summariser.git
+```
+

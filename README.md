@@ -1,6 +1,7 @@
 # Youtube Summariser
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/somanyadav/youtube-summariser/main/app.py)
+![Youtube Summary App](https://thumbs.gfycat.com/BeautifulTepidGermanwirehairedpointer-mobile.mp4)
 
 ## Why YouTube Summariser
 

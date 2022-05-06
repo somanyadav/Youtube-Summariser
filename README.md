@@ -27,7 +27,5 @@
 
 ## Installation
 
-1. ```
-git clone https://github.com/somanyadav/Youtube-Summariser.git
-```
+1. ```git clone https://github.com/somanyadav/Youtube-Summariser.git```
 

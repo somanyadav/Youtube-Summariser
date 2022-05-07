@@ -332,7 +332,7 @@ st.video(url)
 #Specify Summarization type
 sumtype = st.sidebar.selectbox(
      'Specify Summarization Type',
-     options=['Abstractive (T5 Algorithm)', 'Extractive'])
+     options=['Extractive', 'Abstractive (T5 Algorithm)'])
 
 #-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
 if sumtype == 'Extractive':

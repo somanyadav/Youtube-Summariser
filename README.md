@@ -30,5 +30,6 @@
 ## Installation
 
 1. ```git clone https://github.com/somanyadav/Youtube-Summariser.git```
-2. ```pip install -r requirements.txt```
-3. ```streamlit run app.py```
+2. ```cd Youtube-Summariser-main```
+3. ```pip install -r requirements.txt```
+4. ```streamlit run app.py```

@@ -324,8 +324,19 @@ st.sidebar.markdown(
 url = st.sidebar.text_input('Video URL', 'https://www.youtube.com/watch?v=T-JVpKku5SI')
 
 # Display Video and Title
-yt = YouTube(url)
-value = yt.title
+from bs4 import BeautifulSoup
+import requests
+
+r = requests.get("https://www.youtube.com/watch?v=T-JVpKku5SI")
+soup = BeautifulSoup(r.text)
+
+link = soup.find_all(name="title")[0]
+title = str(link)
+title = title.replace("<title>","")
+title = title.replace("</title>","")
+title = title.replace("&amp;","&")
+
+value = title
 st.info("### " + value)
 st.video(url)
 

@@ -536,9 +536,8 @@ st.sidebar.info(
         dedent(
             """
         This web [app][#streamlit-app] is made by\n
-        [Diksha Dutt][#linkedin1] and [Soman Yadav][#linkedin2].
+        [Soman Yadav][#linkedin2].
         
-        [#linkedin1]: https://www.linkedin.com/in/dikshadutt08/
         [#linkedin2]: https://www.linkedin.com/in/somanyadav/
         [#streamlit-app]: https://github.com/somanyadav/Youtube-Summariser/
         

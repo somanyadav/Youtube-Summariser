@@ -536,7 +536,7 @@ st.sidebar.info(
         dedent(
             """
         This web [app][#streamlit-app] is made by\n
-        [Soman Yadav][#linkedin2].
+        [Soman Yadav][#linkedin2]
         
         [#linkedin2]: https://www.linkedin.com/in/somanyadav/
         [#streamlit-app]: https://github.com/somanyadav/Youtube-Summariser/

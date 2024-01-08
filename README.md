@@ -36,3 +36,25 @@ System: Python3.8
 3. ```pip install -r requirements.txt```
 4. ```pip install streamlit>=1.8.1```
 5. ```streamlit run app.py```
+
+
+## Contributors
+
+<table>
+	<thead>
+	<tr>
+		<td>
+			<img width="100" alt="Diksha Dutt" src="https://i.imgur.com/wnTuh6Y.png" align="center">
+			<a href="https://github.com/dikshadutt08"><p align="center"> Diksha Dutt </p></a>
+		</td>
+		<td>
+			<img width="100" alt="Soman Yadav" src="https://i.imgur.com/iD76kAe.png" align="center">
+			<a href="https://github.com/somanyadav"><p align="center"> Soman Yadav </p></a>
+		</td>
+	</tr>
+</table>
+
+
+
+	
+

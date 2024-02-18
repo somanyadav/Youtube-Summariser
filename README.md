@@ -1,7 +1,5 @@
 # Youtube Summariser
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/somanyadav/youtube-summariser/main/app.py)
-
 [![Youtube Summary App](https://github.com/somanyadav/Youtube-Summariser/blob/main/play.gif)](https://www.linkedin.com/posts/somanyadav_python-nlp-datascience-activity-6928719876270239744-UGYV?utm_source=share&utm_medium=member_desktop)
 
 ## Why YouTube Summariser
